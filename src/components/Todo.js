@@ -26,14 +26,37 @@ function TodoForm({ addTodo }) {
    )
 }
 
-function TodoList({ todo, deleteTodo, completedTodo }) {
+function TodoList({ todo, deleteTodo, completedTodo, editTodo }) {
+   const [isEdit, setIsEdit] = useState(false);
+   const [term, setTerm] = useState('');
+
+   const showFormEdit = () => {
+      setIsEdit(!isEdit);
+   }
+
+   const saveEdit = (id) => {
+      editTodo(term, id);
+      setIsEdit(false);
+      setTerm('');
+   }
+   
    return (
-      <li style={{ textDecoration: todo.completed ? 'line-through' : '' }}>
-         <span>{todo.name}</span>
-         <button onClick={null}>Edit</button>
-         <button onClick={() => deleteTodo(todo.id)}>X</button>
-         <button onClick={() => completedTodo(todo.id)}>V</button>
-      </li>
+      <React.Fragment>
+         {isEdit ? (
+            <li>
+               <input type="text" value={term || todo.name} onChange={ev => setTerm(ev.target.value)} placeholder="edit detail"/>
+               <button onClick={() => saveEdit(todo.id)}>Save</button>
+               <button onClick={() => showFormEdit()}>Cancel</button>
+            </li>
+         ) : (
+            <li style={{ textDecoration: todo.completed ? 'line-through' : '' }}>
+               <span>{todo.name}</span>
+               <button onClick={() => showFormEdit()}>Edit</button>
+               <button onClick={() => deleteTodo(todo.id)}>X</button>
+               <button onClick={() => completedTodo(todo.id)}>V</button>
+            </li>
+         )}
+      </React.Fragment>
    )
 }
 
@@ -41,10 +64,10 @@ function TodoList({ todo, deleteTodo, completedTodo }) {
 function Todo() {
    const [todos, setTodos] = useState(dataTodos);
 
-   const addTodo = (todo) => {
+   const addTodo = (payload) => {
       const item = {
          id: Math.floor(Math.random() * 20 + 5), // generate random id between 5 and 20
-         name: todo,
+         name: payload,
          completed: false
       }
       const newTodo = [...todos, item];
@@ -67,8 +90,15 @@ function Todo() {
       setTodos(deletedItem);
    }
 
-   const editTodo = (id) => {
-      console.log(id)
+   const editTodo = (payload, id) => {
+      const editItem = todos.map(todo => {
+         if(todo.id === id) {
+            return { ...todo, id, name: payload };
+         } else {
+            return todo;
+         }
+      });
+      setTodos(editItem);
    }
 
    return (
@@ -82,6 +112,7 @@ function Todo() {
                      todo={todo}
                      deleteTodo={deleteTodo}
                      completedTodo={completedTodo}
+                     editTodo={editTodo}
                   />
                ))}
             </ul>
