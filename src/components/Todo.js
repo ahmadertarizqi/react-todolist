@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
+import { Button } from '../styles';
+
 const dataTodos = [
    { id: 1, name: 'Build product in Side Hustle' , completed: true },
    { id: 2, name: 'Run in the morning' , completed: false },
@@ -20,7 +24,7 @@ function TodoForm({ addTodo }) {
       <div style={{display: 'flex', justifyContent: 'center'}}>
          <form onSubmit={handleSubmit}>
             <input type="text" value={term} onChange={ev => setTerm(ev.target.value)} className="todo-input" />
-            <button type="submit">Add List</button>
+            <button type="submit" css={Button}>Add List</button>
          </form>
       </div>
    )

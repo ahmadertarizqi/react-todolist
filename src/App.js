@@ -1,5 +1,7 @@
 import React from 'react';
 import './App.css';
+import 'tailwindcss/dist/base.min.css';
+
 import Todo from './components/Todo';
 
 function App() {
