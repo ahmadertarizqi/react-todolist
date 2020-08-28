@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { Button } from '../styles';
+import { Button } from 'styles';
 
 const dataTodos = [
    { id: 1, name: 'Build product in Side Hustle' , completed: true },
