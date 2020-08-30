@@ -6,7 +6,7 @@ import { BtnCircle, BtnCircleOutline, BtnCircleAction, InputOutline, BtnCenter, 
 import { IconCheck, IconCancel, IconEditList, IconTrash } from 'ui/Icons';
 
 export default function TodoList(props) {
-   const { todo, deleteTodo, completedTodo, editTodo } = props;
+   const { todo, deleteTodo, completedTodo, editTodo, status } = props;
    const [isEdit, setIsEdit] = useState(false);
    const [term, setTerm] = useState('');
 
@@ -47,9 +47,11 @@ export default function TodoList(props) {
                      {todo.completed ? 'V' : ''}
                   </button>
                   <div css={tw`mx-2 flex-auto`} style={{ textDecoration: todo.completed ? 'line-through' : '' }}>{todo.name}</div>
-                  <button css={[BtnCircle, BtnCircleAction, BtnCenter]} onClick={() => showFormEdit()}>
-                     <IconEditList />
-                  </button>
+                  {status === 'doing' && (
+                     <button css={[BtnCircle, BtnCircleAction, BtnCenter]} onClick={() => showFormEdit()}>
+                        <IconEditList />
+                     </button>
+                  )}
                   <button css={[BtnCircle, BtnCircleAction, BtnCenter, tw`ml-2`]} onClick={() => deleteTodo(todo.id)}>
                      <IconTrash />
                   </button>
