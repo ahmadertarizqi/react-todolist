@@ -1,71 +1,19 @@
 import React, { useState } from 'react';
-
 /** @jsx jsx */
-import { jsx } from '@emotion/core';
-import { Button } from 'styles';
+import { jsx, css } from '@emotion/core';
+import tw from 'twin.macro';
+
+import TodoForm from './TodoForm';
+import TodoList from './TodoList';
 
 const dataTodos = [
-   { id: 1, name: 'Build product in Side Hustle' , completed: true },
-   { id: 2, name: 'Run in the morning' , completed: false },
-   { id: 3, name: 'Learn Cooking' , completed: false },
+   { id: 1, name: 'Build product in Side Hustle', completed: true },
+   { id: 2, name: 'Run in the morning', completed: false },
+   { id: 3, name: 'Learn Cooking', completed: false },
 ];
 
-function TodoForm({ addTodo }) {
-   const [term, setTerm] = useState('');
 
-   const handleSubmit = ev => {
-      ev.preventDefault();
-      if(!term) return;
-      addTodo(term);
-      setTerm('');
-   }
-
-   return (
-      <div style={{display: 'flex', justifyContent: 'center'}}>
-         <form onSubmit={handleSubmit}>
-            <input type="text" value={term} onChange={ev => setTerm(ev.target.value)} className="todo-input" />
-            <button type="submit" css={Button}>Add List</button>
-         </form>
-      </div>
-   )
-}
-
-function TodoList({ todo, deleteTodo, completedTodo, editTodo }) {
-   const [isEdit, setIsEdit] = useState(false);
-   const [term, setTerm] = useState('');
-
-   const showFormEdit = () => {
-      setIsEdit(!isEdit);
-   }
-
-   const saveEdit = (id) => {
-      editTodo(term, id);
-      setIsEdit(false);
-      setTerm('');
-   }
-   
-   return (
-      <React.Fragment>
-         {isEdit ? (
-            <li>
-               <input type="text" value={term || todo.name} onChange={ev => setTerm(ev.target.value)} placeholder="edit detail"/>
-               <button onClick={() => saveEdit(todo.id)}>Save</button>
-               <button onClick={() => showFormEdit()}>Cancel</button>
-            </li>
-         ) : (
-            <li style={{ textDecoration: todo.completed ? 'line-through' : '' }}>
-               <span>{todo.name}</span>
-               <button onClick={() => showFormEdit()}>Edit</button>
-               <button onClick={() => deleteTodo(todo.id)}>X</button>
-               <button onClick={() => completedTodo(todo.id)}>V</button>
-            </li>
-         )}
-      </React.Fragment>
-   )
-}
-
-
-function Todo() {
+export default function Todo() {
    const [todos, setTodos] = useState(dataTodos);
 
    const addTodo = (payload) => {
@@ -80,7 +28,7 @@ function Todo() {
 
    const completedTodo = (id) => {
       const completedItem = todos.map(todo => {
-         if(todo.id === id) {
+         if (todo.id === id) {
             return { ...todo, completed: !todo.completed };
          } else {
             return todo;
@@ -96,7 +44,7 @@ function Todo() {
 
    const editTodo = (payload, id) => {
       const editItem = todos.map(todo => {
-         if(todo.id === id) {
+         if (todo.id === id) {
             return { ...todo, id, name: payload };
          } else {
             return todo;
@@ -105,14 +53,20 @@ function Todo() {
       setTodos(editItem);
    }
 
+   const todoContainer = css`
+      max-width: 550px;
+      margin: 0 auto;
+      padding: 10px;
+   `;
+
    return (
-      <div className="todo-wrapper">
+      <div css={todoContainer}>
          <TodoForm addTodo={addTodo} />
-         <div>
-            <ul>
+         <div css={tw`flex justify-center`}>
+            <ul css={tw`w-full`}>
                {todos.map((todo) => (
-                  <TodoList 
-                     key={todo.id} 
+                  <TodoList
+                     key={todo.id}
                      todo={todo}
                      deleteTodo={deleteTodo}
                      completedTodo={completedTodo}
@@ -124,5 +78,3 @@ function Todo() {
       </div>
    )
 }
-
-export default Todo;

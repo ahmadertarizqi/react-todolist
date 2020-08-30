@@ -1,12 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
+
+import Todo from 'components/Todo';
+
+import './index.css';
+import 'tailwindcss/dist/base.min.css';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Todo />  
   </React.StrictMode>,
   document.getElementById('root')
 );
