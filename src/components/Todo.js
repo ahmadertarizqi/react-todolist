@@ -15,7 +15,7 @@ export default function Todo() {
 
    const addTodo = (payload) => {
       const item = {
-         id: Math.floor(Math.random() * 20 + 5), // generate random id between 5 and 20
+         id: Math.floor(Math.random() * 50 + 5), // generate random id between 5 and 20
          name: payload,
          completed: false
       }
