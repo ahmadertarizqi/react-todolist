@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import tw from 'twin.macro';
@@ -10,8 +10,13 @@ import { Badge } from 'ui/Styles';
 import DataTodos from './data';
 
 export default function Todo() {
-   const [todos, setTodos] = useState(DataTodos);
+   const initialTodos = JSON.parse(window.localStorage.getItem('todolist')) || DataTodos;
+   const [todos, setTodos] = useState(initialTodos);
    const [completed, setCompleted] = useState(true);
+
+   useEffect(() => {
+      window.localStorage.setItem('todolist', JSON.stringify(todos));
+   }, [todos]);
 
    const addTodo = (payload) => {
       const item = {
