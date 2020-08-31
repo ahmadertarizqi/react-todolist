@@ -22,7 +22,7 @@ export default function TodoForm({ addTodo }) {
             <button type="submit" css={tw`w-8 h-8 flex justify-center items-center bg-transparent mr-2`}>
                <IconPlusCircle />
             </button>
-            <input type="text" placeholder="Type something..."
+            <input type="text" placeholder="Add a Task .."
                value={term}
                onChange={ev => setTerm(ev.target.value)}
                css={[Input, tw`h-full`]}

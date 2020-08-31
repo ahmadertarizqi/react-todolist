@@ -78,37 +78,50 @@ export default function Todo() {
             <TodoForm addTodo={addTodo} />
             <h4 css={tw`mb-2 font-semibold`}>Doing</h4>
             <div css={tw`flex justify-center`}>
-               <ul css={tw`w-full`}>
-                  {filterTodoCompleted('doing').map((todo) => (
-                     <TodoList
-                        key={todo.id}
-                        todo={todo}
-                        deleteTodo={deleteTodo}
-                        completedTodo={completedTodo}
-                        editTodo={editTodo}
-                        status='doing'
-                     />
-                  ))}
-               </ul>
-            </div>
-            <br/>
-            <button css={tw`flex items-center bg-gray-400 py-1 px-2 rounded mb-2`} onClick={() => toggleCompleted()}>
-               <h4 css={tw`font-semibold`}>Completed <span css={Badge}>{filterTodoCompleted('completed').length}</span></h4>
-            </button>
-            {completed && (
-               <div css={tw`flex justify-center`}>
-                  <ul css={tw`w-full`}>
-                     {filterTodoCompleted('completed').map((todo) => (
+               {filterTodoCompleted('doing').length > 0 ? (
+                 <ul css={tw`w-full`}>
+                    {filterTodoCompleted('doing').map((todo) => (
                         <TodoList
                            key={todo.id}
                            todo={todo}
                            deleteTodo={deleteTodo}
                            completedTodo={completedTodo}
                            editTodo={editTodo}
-                           status='completed'
+                           status='doing'
                         />
                      ))}
-                  </ul>
+                 </ul> 
+               ) : (
+                  <div css={tw`h-20 flex items-center`}>
+                     <h4>Oopss... Task is Empty</h4>
+                  </div>
+               )}
+            </div>
+            <br/>
+            
+            <button css={tw`flex items-center bg-gray-400 py-1 px-2 rounded mb-2`} onClick={() => toggleCompleted()}>
+               <h4 css={tw`font-semibold`}>Completed <span css={Badge}>{filterTodoCompleted('completed').length}</span></h4>
+            </button>
+            {completed && (
+               <div css={tw`flex justify-center`}>
+                  {filterTodoCompleted('completed').length > 0 ? (
+                     <ul css={tw`w-full`}>
+                        {filterTodoCompleted('completed').map((todo) => (
+                           <TodoList
+                              key={todo.id}
+                              todo={todo}
+                              deleteTodo={deleteTodo}
+                              completedTodo={completedTodo}
+                              editTodo={editTodo}
+                              status='completed'
+                           />
+                        ))}
+                     </ul> 
+                  ) : (
+                     <div css={tw`h-20 flex items-center`}>
+                        <h4>Oopss... Task completed is Empty</h4>
+                     </div>
+                  )}
                </div>
             )} 
          </div>
