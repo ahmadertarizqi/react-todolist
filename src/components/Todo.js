@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import tw from 'twin.macro';
+import { v4 as uuidv4 } from 'uuid';
 
 import TodoForm from './TodoForm';
 import TodoList from './TodoList';
@@ -20,7 +21,7 @@ export default function Todo() {
 
    const addTodo = (payload) => {
       const item = {
-         id: Math.floor(Math.random() * 100 + 5), // generate random id between 5 and 100
+         id: uuidv4(), // generate id
          name: payload,
          completed: false
       }
