@@ -21,7 +21,7 @@ export default function Todo() {
 
    const addTodo = (payload) => {
       const item = {
-         id: uuidv4(), // generate id
+         id: uuidv4(), // generate random id between 5 and 100
          name: payload,
          completed: false
       }
@@ -90,10 +90,10 @@ export default function Todo() {
    `;
 
    return (
-      <div css={tw`h-full py-10 px-12`}>
+      <div css={tw`h-full py-10 px-1 sm:px-12`}>
          <div css={todoContainer}>
             <div css={todoHeaderStyle}>
-               <h4 css={tw`text-2xl mb-3 text-center`}>Hi Welcome, make your todo-list!!</h4>
+               <h4 css={tw`text-lg sm:text-2xl mb-3 text-center`}>Hi Welcome, make your todo-list!!</h4>
                <TodoForm addTodo={addTodo} />
             </div>
 
